@@ -1,0 +1,50 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    list-style-type: none;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+}
+
+.loginOuter {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   position: relative;
+   top: 8rem;
+}
+
+.outerWrapper {
+    background-color: #ffffff;
+    box-shadow: #cbcbcb 0 4px 8px 0;
+    width: 30%;
+    margin: auto;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.outerWrapper .formWrapper .labelControl {
+    font-size: 1rem;
+    color: #000;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.outerWrapper .formWrapper .formControl {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 0.4rem 0.9rem;
+    box-shadow: #cbcbcb 0 4px 8px 0;
+    display: block;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+}
+
+.outerWrapper .switchaccount{
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #000;
+}
