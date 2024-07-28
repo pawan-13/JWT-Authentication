@@ -40,11 +40,16 @@
     box-shadow: #cbcbcb 0 4px 8px 0;
     display: block;
     border-radius: 6px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .outerWrapper .switchaccount{
     font-size: 0.8rem;
     font-weight: 600;
     color: #000;
+}
+
+.formWrapper span{
+    display: inline-block;
+    margin-bottom: 0.6rem;
 }
