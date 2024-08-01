@@ -4,4 +4,4 @@ const DB = "mongodb+srv://pawan30:Googletest@cluster0.pc52w4a.mongodb.net/Authus
 mongoose.connect(DB,{
     useUnifiedTopology:true,
     useNewUrlParser:true,
-}).then(()=> console.log('DataBase is Connected')).catch((error)=>console.log(error)).finally(()=>mongoose.connection.close())
+}).then(()=> console.log('DataBase is Connected')).catch((error)=>console.log(error));

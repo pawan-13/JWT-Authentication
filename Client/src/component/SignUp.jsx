@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import axios from 'axios';
 const SignUp = () => {
     const [inputval, setInputVal] = useState({
         name: "",
@@ -21,7 +21,7 @@ const SignUp = () => {
         }));
     };
 
-    const handleClick = (e) => {
+    const handleClick = async(e) => {
         e.preventDefault();
         const { name, email, password } = inputval;
         let errors = {
@@ -57,6 +57,12 @@ const SignUp = () => {
         }
 
         if (hasErrors) {
+            const data  = await axios.post('http://localhost:3000/signup',{
+                data:JSON.stringify({
+                    name, email, password
+                })
+            });   
+            console.log('response',data);
             setInputVal({
                 name: "",
                 email: "",
@@ -66,8 +72,7 @@ const SignUp = () => {
                     email: "",
                     password: "",
                 },
-            });      
-            console.log("Successfully signed up!");
+            });   
         } else {
             setInputVal((prevState) => ({
                 ...prevState,
