@@ -57,7 +57,7 @@ const SignUp = () => {
         }
 
         if (hasErrors) {
-            const data  = await axios.post('/signup',{
+            const data  = await axios.post('http://localhost:3000/signup',{
                 data:JSON.stringify({
                     name, email, password
                 })
