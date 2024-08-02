@@ -18,10 +18,15 @@ router.post('/signup', async(req, res) => {
                 name,email,password
             });
 
-            finaluser.save();
+            //here save the password
+
+            const storeData =  await finaluser.save();
+            console.log(storeData);
+            
         }
     } catch (error) {
-        console.log(error);
+        res.status(400).json(error);
+        console.log('error');
     }
 });
 

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import validator from 'validator';
+import bcrypt from 'bcrypt';
 
 const userSchema =  new mongoose.Schema({
       name:{
@@ -34,4 +35,9 @@ const userSchema =  new mongoose.Schema({
 
 //creating model
 const userdb = new mongoose.model("users",userSchema);
+
+//hash Password
+userSchema.pre('save',async function(next){
+  this.password = await bcrypt.hash(this.password,12);
+})
 export default userdb;
