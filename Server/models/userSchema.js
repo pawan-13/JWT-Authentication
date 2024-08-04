@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import validator from 'validator';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs'
+import jwt from 'jsonwebtoken';
+
+const Keysecret = "pawankumarrikhari"
 
 const userSchema =  new mongoose.Schema({
       name:{
@@ -23,7 +26,7 @@ const userSchema =  new mongoose.Schema({
         required:true,
         minlength:6,
       },
-      token:[
+      tokens:[
         {
             token:{
                 type:String,
@@ -33,11 +36,26 @@ const userSchema =  new mongoose.Schema({
       ]
 });
 
-//creating model
-const userdb = new mongoose.model("users",userSchema);
-
 //hash Password
 userSchema.pre('save',async function(next){
-  this.password = await bcrypt.hash(this.password,12);
-})
+  this.password = await bcryptjs.hash(this.password,12);
+  next();
+});
+
+userSchema.methods.generateAuthtoken = async function() {
+  try {
+     let token12 = jwt.sign({_id:this._id},Keysecret,{
+      expiresIn:"1d"
+     });
+
+     this.tokens = this.tokens.concat({token:token12});
+     await this.save();
+     return token12;
+  } catch (error) {
+    res.status(400).json({error:"error"});    
+  }
+}
+
+//creating model
+const userdb = new mongoose.model("users",userSchema);
 export default userdb;

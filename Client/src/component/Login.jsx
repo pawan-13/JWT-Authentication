@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 const Login = () => {
     const [inputval, setInputVal] = useState({
         email: "",
@@ -20,7 +23,17 @@ const Login = () => {
         });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
+        const notify = () => toast.success('Login is successfull', {
+            position: "top-right",
+            autoClose: 5000,
+            pauseOnHover: true,
+        });
+        const errorNotify = () => toast.error('something is wrong', {
+            position: "top-right",
+            autoClose: 5000,
+            pauseOnHover: true,
+        });
         e.preventDefault();
         const { email, password } = inputval;
         let errors = {
@@ -49,15 +62,30 @@ const Login = () => {
         }
 
         if (hasErrors) {
-            setInputVal({
-                email: "",
-                password: "",
-                error: {
+            try {
+                const response = await axios.post('http://localhost:8000/login', {
+                    email,
+                    password
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                console.log(response);
+                notify();
+                localStorage.setItem("usersdatatoken",response.result.token);
+                setInputVal({
                     email: "",
-                    password: ""
-                },
-            });
-            console.log("Successfully Login in!")
+                    password: "",
+                    error: {
+                        email: "",
+                        password: "",
+                    },
+                });
+            } catch (error) {
+                errorNotify();
+                console.error('Error during signup:', error.response ? error.response.data : error.message);
+            }
         }
         else{
             setInputVal((preValue) => {
@@ -94,6 +122,7 @@ const Login = () => {
                         </form>
                     </div>
                 </div>
+                <ToastContainer/>
             </section>
         </>
     )

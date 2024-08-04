@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 const SignUp = () => {
     const [inputval, setInputVal] = useState({
@@ -21,7 +23,17 @@ const SignUp = () => {
         }));
     };
 
-    const handleClick = async(e) => {
+    const handleClick = async (e) => {
+        const notify = () => toast.success('signup is successfull', {
+            position: "top-right",
+            autoClose: 5000,
+            pauseOnHover: true,
+        });
+        const errorNotify = () => toast.error('something is wrong', {
+            position: "top-right",
+            autoClose: 5000,
+            pauseOnHover: true,
+        });
         e.preventDefault();
         const { name, email, password } = inputval;
         let errors = {
@@ -29,7 +41,7 @@ const SignUp = () => {
             email: "",
             password: "",
         };
-        
+
         let hasErrors = true;
 
         if (name === "") {
@@ -57,22 +69,32 @@ const SignUp = () => {
         }
 
         if (hasErrors) {
-            const data  = await axios.post('http://localhost:3000/signup',{
-                data:JSON.stringify({
-                    name, email, password
-                })
-            });   
-            console.log('response',data);
-            setInputVal({
-                name: "",
-                email: "",
-                password: "",
-                error: {
+            try {
+                const response = await axios.post('http://localhost:8000/signup', {
+                    name,
+                    email,
+                    password
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                console.log('response', response.data);
+                notify();
+                setInputVal({
                     name: "",
                     email: "",
                     password: "",
-                },
-            });   
+                    error: {
+                        name: "",
+                        email: "",
+                        password: "",
+                    },
+                });
+            } catch (error) {
+                errorNotify();
+                console.error('Error during signup:', error.response ? error.response.data : error.message);
+            }
         } else {
             setInputVal((prevState) => ({
                 ...prevState,
@@ -80,7 +102,6 @@ const SignUp = () => {
             }));
         }
     };
-
     return (
         <>
             <section>
@@ -131,10 +152,11 @@ const SignUp = () => {
                                     Already have an Account? <Link to="/">LogIn</Link>
                                 </p>
                             </div>
-                        </form>
+                        </form>                        
                     </div>
                 </div>
-            </section>
+                <ToastContainer />
+            </section>           
         </>
     );
 }
