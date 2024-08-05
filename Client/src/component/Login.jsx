@@ -71,9 +71,10 @@ const Login = () => {
                         'Content-Type': 'application/json',
                     }
                 });
-                console.log(response);
+                console.log(response.data);
                 notify();
-                localStorage.setItem("usersdatatoken",response.result.token);
+                localStorage.setItem("usersdatatoken",response.data.token);
+                
                 setInputVal({
                     email: "",
                     password: "",
@@ -84,7 +85,7 @@ const Login = () => {
                 });
             } catch (error) {
                 errorNotify();
-                console.error('Error during signup:', error.response ? error.response.data : error.message);
+                console.error('Error during Login:', error.response ? error.response.data : error.message);
             }
         }
         else{

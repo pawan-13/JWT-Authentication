@@ -1,3 +1,4 @@
+import Home from "./component/home/Home";
 import Login from "./component/Login"
 import SignUp from "./component/SignUp";
 import './component/Styles.css';
@@ -11,6 +12,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login/>}/>
           <Route path="/signup" element={<SignUp/>}/>
+          <Route path="/dash" element={<Home/>}/>
         </Routes>
       </div>
     </>

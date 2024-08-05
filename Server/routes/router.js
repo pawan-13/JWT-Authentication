@@ -1,6 +1,7 @@
 import express from 'express';
 import bcryptjs from 'bcryptjs';
 import userdb from '../models/userSchema.js';
+import authenticate from '../middleware/authenticate.js';
 
 const router = new express.Router();
 
@@ -48,7 +49,7 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: "Invalid email." });
         }
 
-        const isMatch = await bcryptjs.compare(password, userValid.password);
+        const isMatch = bcryptjs.compare(password, userValid.password);
         if (!isMatch) {
             return res.status(400).json({ error: "Invalid password." });
         }
@@ -67,5 +68,12 @@ router.post('/login', async (req, res) => {
         return res.status(500).json({ error: "Internal server error" });
     }
 });
+
+//user valid
+
+router.get('/validuser',authenticate,async(req,res)=>{
+console.log('done');
+
+})
 
 export default router;
