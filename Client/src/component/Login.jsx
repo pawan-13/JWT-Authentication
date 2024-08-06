@@ -74,6 +74,8 @@ const Login = () => {
                 console.log(response.data);
                 notify();
                 localStorage.setItem("usersdatatoken",response.data.token);
+                console.log("usersdatatoken",response.data.token);
+                
                 
                 setInputVal({
                     email: "",

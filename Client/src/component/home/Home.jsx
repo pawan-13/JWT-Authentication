@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import axios from "axios";
 
 const Home = () => {
-  const dashBoard = () => {
+  const dashBoard = async() => {
     let token = localStorage.getItem("usersdatatoken");
-    const res= axios.get('/validuser',{
+    console.log('pawan',token);
+    
+    const res= await axios.get('/validuser',{
       headers:{
         "Content-Type":"application/json",
-        "authorization":token
+        "Authorization":token
       }
     });
     console.log(res);

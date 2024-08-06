@@ -73,7 +73,6 @@ router.post('/login', async (req, res) => {
 
 router.get('/validuser',authenticate,async(req,res)=>{
 console.log('done');
-
 })
 
 export default router;
